@@ -83,18 +83,15 @@ export default class UpdateTest extends React.Component {
 
     update_to_server = () => {
         if(window.confirm('Are you sure?')) {
-            fetch('http://simpleosbackend.herokuapp.com/update/test/' + this.state.test_id, {
-                method: 'POST',
-                body: {
-                    answers: this.state.answers,
-                    questions: this.state.questions
-                }
+            const data = {answers: this.state.answers, questions: this.state.questions}
+            fetch('https://simpleosbackend.herokuapp.com/update/test/' + this.state.test_id, {
+                method: 'PUT',
+                body: JSON.stringify(data),
+                headers: {
+                    'Content-Type': 'application/json'
+                  }
             }).then(res => {
                 alert('Updated')
-            })
-            .then(data => {
-                alert('Updated')
-                window.location.reload();
             })
             .catch(err => console.log(err))
         }
