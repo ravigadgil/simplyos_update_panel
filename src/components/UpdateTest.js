@@ -97,6 +97,34 @@ export default class UpdateTest extends React.Component {
         }
     }
 
+    delete_question = () => {
+        if(window.confirm('Are you sure?')) {
+            let stateAnswers = this.state.answers;
+            let stateQuestions = this.state.questions;
+            stateAnswers.splice(this.state.currentIndex, 1);
+            stateQuestions.splice(this.state.currentIndex, 1);
+            let myData = [];
+            stateQuestions.forEach(question => {
+                let myQuestion = question;
+                myQuestion = myQuestion.replace('A.', '\n\nA.');
+                myQuestion = myQuestion.replace('B.', '\nB.');
+                myQuestion = myQuestion.replace('C.', '\nC.');
+                myQuestion = myQuestion.replace('D.', '\nD.');
+                myQuestion = myQuestion.replace('E.', '\nE.');
+                myQuestion = myQuestion.replace('F.', '\nF.');
+                myQuestion = myQuestion.replace('G.', '\nG.');
+                myQuestion = myQuestion.replace('H.', '\nH.');
+                myQuestion = myQuestion.replace('I.', '\nI.');
+                myData.push(myQuestion);
+            });
+            this.setState({ struct_questions: myData ,answers: stateAnswers, questions: stateQuestions}, () => {
+                document.getElementById('answers_input').value = this.state.struct_questions[0];
+                document.getElementById('answer_input').value = this.state.answers[0];
+                this.set_select()
+            })
+        }
+    }
+
     render() {
         return(
             <div>
@@ -116,7 +144,8 @@ export default class UpdateTest extends React.Component {
                     <h5>Answer</h5>
                     <input className="form-control" id="answer_input" />
                     <button onClick={this.update_test} style={{marginTop: 10, width: "100%"}} className="btn btn-primary">Update Question</button>
-                    <br /><br />
+                    <br />
+                    <button onClick={this.delete_question} className="btn btn-danger" style={{marginTop: 10, width: "100%"}}>Delete</button>
                     <br /><br />
                     <h1>5. Save changes to server</h1>
                     <button onClick={this.update_to_server} style={{marginBottom: 10, width: "100%"}} className="btn btn-primary">Save</button>
