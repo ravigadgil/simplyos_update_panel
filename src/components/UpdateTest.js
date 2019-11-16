@@ -125,6 +125,33 @@ export default class UpdateTest extends React.Component {
         }
     }
 
+    add_image_question = () => {
+        let question = document.getElementById('image_question_input').value;
+        const answer = document.getElementById('image_answer_input').value;
+        const href =  document.getElementById('image_href_input').value;
+        question = question.replace('\n\nA. ', 'A. ');
+        question = question.replace('\nB. ', 'B. ');
+        question = question.replace('\nC. ', 'C. ');
+        question = question.replace('\nD. ', 'D. ');
+        question = question.replace('\nE. ', 'E. ');
+        question = question.replace('\nF. ', 'F. ');
+        question = question.replace('\nG. ', 'G. ');
+        question = question.replace('\nH. ', 'H. ');
+        question = question.replace('\nI. ', 'I. ');
+        if(question.length > 0 && answer.length > 0 && href.length > 0) {
+            const reqbody = {href, answer, question};
+            fetch('https://simpleosbackend.herokuapp.com/add/imageQuestion/' + this.state.test_id, {
+                method: "POST",
+                body: JSON.stringify(reqbody),
+                headers: {
+                    'Content-Type': 'application/json'
+                  }
+            }).then(res => res.json())
+            .then(d => alert(d.msg))
+            .catch(err => alert(err));
+        }
+    }
+
     render() {
         return(
             <div>
@@ -146,6 +173,25 @@ export default class UpdateTest extends React.Component {
                     <button onClick={this.update_test} style={{marginTop: 10, width: "100%"}} className="btn btn-primary">Update Question</button>
                     <br />
                     <button onClick={this.delete_question} className="btn btn-danger" style={{marginTop: 10, width: "100%"}}>Delete</button>
+                    <br /><br />
+                    <h1>4. Add a image question</h1>
+                    <hr />
+                    <p>At the question textarea, please structure it as the text area up, with these rules: </p>
+                    <ol>
+                        <li>The question should be seperated by one line from the alternatvies</li>
+                        <li>The alternatives should be formated like this: alternative + . + space + description, for example "A. lorem12"</li>
+                        <li>Href input should contain the image link</li>
+                        <li>If question has only one alternative, then write only a character. If it has more, than the answer should be formated like this:
+                            answer_a + , + space + answer_b, for example "A, B"
+                        </li>
+                    </ol>
+                    <h5>Question:</h5>
+                    <textarea id="image_question_input" style={{marginBottom: 10, minHeight: 200}} className="form-control"></textarea>
+                    <h5>Href: </h5>
+                    <input id="image_href_input" style={{marginBottom: 10}} className="form-control" />
+                    <h5>Answer: </h5>
+                    <input id="image_answer_input" style={{marginBottom: 10}} className="form-control" />
+                    <button style={{width: "100%"}} className="btn btn-info" onClick={this.add_image_question}>Add question</button>
                     <br /><br />
                     <h1>5. Save changes to server</h1>
                     <button onClick={this.update_to_server} style={{marginBottom: 10, width: "100%"}} className="btn btn-primary">Save</button>
