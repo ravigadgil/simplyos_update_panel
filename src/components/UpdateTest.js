@@ -15,7 +15,7 @@ export default class UpdateTest extends React.Component {
     }
 
     componentDidMount() {
-        fetch(`http://35.200.158.23:5500/test/${this.state.test_id}`)
+        fetch(`https://simplyopensource.in:5000/test/${this.state.test_id}`)
     .then(res => res.json())
     .then(data => {
         let myData = [];
@@ -84,7 +84,7 @@ export default class UpdateTest extends React.Component {
     update_to_server = () => {
         if(window.confirm('Are you sure?')) {
             const data = {answers: this.state.answers, questions: this.state.questions}
-            fetch('http://35.200.158.23:5500/update/test/' + this.state.test_id, {
+            fetch('https://simplyopensource.in:5000/update/test/' + this.state.test_id, {
                 method: 'PUT',
                 body: JSON.stringify(data),
                 headers: {
@@ -140,7 +140,7 @@ export default class UpdateTest extends React.Component {
         question = question.replace('\nI. ', 'I. ');
         if(question.length > 0 && answer.length > 0 && href.length > 0) {
             const reqbody = {href, answer, question};
-            fetch('http://35.200.158.23:5500/add/imageQuestion/' + this.state.test_id, {
+            fetch('https://simplyopensource.in:5000/add/imageQuestion/' + this.state.test_id, {
                 method: "POST",
                 body: JSON.stringify(reqbody),
                 headers: {

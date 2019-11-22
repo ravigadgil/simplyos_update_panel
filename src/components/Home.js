@@ -9,7 +9,7 @@ export default class Home extends React.Component {
         }
     }
     componentDidMount() {
-        fetch('http://35.200.158.23:5500/tests')
+        fetch('https://simplyopensource.in:5000/tests')
         .then(res => res.json())
         .then(data => {
             this.setState({tests: data})
